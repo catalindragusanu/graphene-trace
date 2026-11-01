@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: graphene-trace-db-prod
+    environment:
+      POSTGRES_DB: graphene_trace
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-EXEC", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - graphene-network
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: graphene-trace-backend-prod
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD}@db:5432/graphene_trace
+      SECRET_KEY: ${SECRET_KEY}
+      CORS_ORIGINS: '["https://yourdomain.com"]'
+      DEBUG: "False"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - graphene-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: graphene-trace-frontend-prod
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - graphene-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data_prod:
+
+networks:
+  graphene-network:
+    driver: bridge

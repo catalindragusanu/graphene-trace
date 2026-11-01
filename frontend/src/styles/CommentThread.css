@@ -1,0 +1,156 @@
+.comment-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.comment-thread.empty {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.comment-thread.empty p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.comment {
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.comment:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.comment.depth-0 {
+  border-left-color: var(--primary-color);
+}
+
+.comment.depth-1 {
+  margin-left: 30px;
+  border-left-color: #60a5fa;
+}
+
+.comment.depth-2 {
+  margin-left: 60px;
+  border-left-color: #93c5fd;
+}
+
+.comment.depth-3 {
+  margin-left: 90px;
+  border-left-color: #bfdbfe;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.author-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.author-name.patient {
+  color: #059669;
+}
+
+.author-name.clinician {
+  color: #2563eb;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+.badge-patient {
+  background-color: #059669;
+}
+
+.badge-clinician {
+  background-color: #2563eb;
+}
+
+.comment-time {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.comment-text {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.reply-btn {
+  padding: 4px 12px;
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reply-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.comment-replies {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .comment.depth-1,
+  .comment.depth-2,
+  .comment.depth-3 {
+    margin-left: 20px;
+  }
+
+  .comment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .comment-text {
+    font-size: 0.9rem;
+  }
+}
